@@ -72,10 +72,11 @@
       });
     </script>
     <style>
-      #side { position: sticky; top: 75px; }
       #categories { padding-top: 20px; }
-      #main { width: calc(100% - 220px); padding-left: 20px; }
-      @media (max-width: 991px) { #main { width: 100%; } }
+      #categories .row { display: flex; align-items: flex-start; }
+      #side { float: none; width: 190px; flex-shrink: 0; position: sticky; top: 75px; padding: 0 10px; }
+      #main { float: none; flex: 1; min-width: 0; padding: 0 15px; }
+      @media (max-width: 991px) { #side { display: none; } #main { width: 100%; } }
     </style>
   </head>
 
