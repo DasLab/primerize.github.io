@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Primerize: Primer Design for PCR Assembly</title>
+    <link rel="shortcut icon" type="image/gif" href="/assets/images/icon_primerize.png" />
+    <link rel="icon" type="image/gif" href="/assets/images/icon_primerize.png" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <link rel="stylesheet" href="/assets/css/palette.css">
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        var today = new Date();
+        $("#cp_year").text(today.getFullYear());
+        $(".dropdown").hover(
+          function(){ $(this).addClass("open"); },
+          function(){ $(this).removeClass("open"); }
+        );
+        $("#top").on("click", function(event) {
+          event.preventDefault();
+          $("html, body").stop().animate({"scrollTop": 0}, 250);
+        });
+        if (window.location.hash) {
+          setTimeout(function() {
+            $('html, body').animate({"scrollTop": $(window.location.hash).offset().top - 75}, 500);
+          }, 100);
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top" role="navigation" id="navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">&nbsp;&nbsp;<span>Primerize</span>&nbsp;&nbsp;</a>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav" id="nav">
+            <li class="dropdown" id="nav_protocol">
+              <a href="/protocol/" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                Protocol <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
+                <li class="li-danger"><a href="/protocol/#pipe"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;Pipeline Overview</a></li>
+                <li class="divider"></li>
+                <li class="li-magenta"><a href="/protocol/#temp_design"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Section #1: DNA Template Design</a></li>
+                <li class="li-violet"><a href="/protocol/#IDT"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Section #2: IDT Oligo Ordering</a></li>
+                <li class="li-dark-red"><a href="/protocol/#PCR"><span class="glyphicon glyphicon-transfer"></span>&nbsp;&nbsp;Section #3: PCR Assembly Protocol</a></li>
+                <li class="li-brown"><a href="/protocol/#TX"><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;Section #4: <i>In Vitro</i> Transcription</a></li>
+                <li class="li-orange"><a href="/protocol/#par_prep"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;Section #5: Massively Parallel Preparation</a></li>
+              </ul>
+            </li>
+            <li class="dropdown" id="nav_code">
+              <a href="/code/" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                Code <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
+                <li class="li-lime"><a href="https://github.com/ribokit/Primerize" target="_blank" rel="noopener noreferrer external"><span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;GitHub</a></li>
+                <li class="li-teal"><a href="https://ribokit.github.io/Primerize/" target="_blank" rel="noopener noreferrer external"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Documentation</a></li>
+              </ul>
+            </li>
+            <li class="dropdown active" id="nav_about">
+              <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                About <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu nav nav-pills nav-stacked" role="menu">
+                <li class="li-success"><a href="/#primerize"><span class="glyphicon glyphicon-indent-left"></span>&nbsp;&nbsp;Primerize</a></li>
+                <li class="li-warning"><a href="/#citation"><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;Citations</a></li>
+                <li class="li-gray"><a href="/#contact"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Contact</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="content">
+      <div class="starter-template">
+        <div class="container theme-showcase" role="main">
+
+          <div class="row">
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+
+              <div class="panel panel-success" id="primerize">
+                <div class="panel-heading">
+                  <h2 class="panel-title"><span class="glyphicon glyphicon-indent-left"></span>&nbsp;&nbsp;Primerize</h2>
+                </div>
+                <div class="panel-body">
+                  <img src="/assets/images/logo_primerize.png" style="clear:both;float:right;padding-left:20px;" height="128"/>
+                  <p class="cap">
+                    Primerize (previously named <code>NA_thermo</code>) is a <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer external"><b>Python</b></a> package for primer design and nucleic acid thermodynamics, developed by the <a href="https://daslab.stanford.edu/" target="_blank" rel="noopener noreferrer external">Das Lab</a> at Stanford University for high-throughput RNA synthesis and design.
+                  </p>
+                  <p>
+                    Given a desired DNA template sequence, Primerize uses a dynamic programming-based algorithm to design primers optimized for PCR assembly into templates for high-throughput RNA synthesis. The algorithm minimizes mispriming during PCR by avoiding primer boundaries that might anneal to incorrect sequences.
+                  </p>
+                  <p>
+                    The algorithm has been tested in the synthesis and rapid purification of numerous RNA sequences from our lab with lengths up to 300 nucleotides. Although developed independently, Primerize is a special case of the general <b>'Gapped Oligo Design'</b> algorithm described by <a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=4375554" target="_blank" rel="noopener noreferrer external">Thachuk and Condon</a>.
+                  </p>
+                  <p>
+                    <a href="https://github.com/ribokit/Primerize" target="_blank" rel="noopener noreferrer external" class="btn btn-success">
+                      <span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;Code on GitHub
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="https://ribokit.github.io/Primerize/" target="_blank" rel="noopener noreferrer external" class="btn btn-info">
+                      <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Documentation
+                    </a>
+                  </p>
+                  <p>
+                    Install via pip:
+                  </p>
+                  <pre><code>pip install primerize</code></pre>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+
+              <div class="panel panel-info" id="citation">
+                <div class="panel-heading">
+                  <h2 class="panel-title"><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;Citation</h2>
+                </div>
+                <div class="panel-body">
+                  <b>Please cite use of Primerize with:</b>
+                  <br/>
+                  <blockquote class="h5 alert alert-orange" style="margin-bottom: 0px">
+                    <p>
+                      Tian, S., and Das, R. (<b>2017</b>)
+                      <br/>
+                      <a href="https://academic.oup.com/bioinformatics/article-abstract/33/9/1405/2801460/Primerize-2D-automated-primer-design-for-RNA" target="_blank" rel="noopener noreferrer external"><u>Primerize-2D: automated primer design for RNA multidimensional chemical mapping.</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>
+                      <br/>
+                      <i>Bioinformatics</i> <b>33(9)</b>: 1405-1406.
+                    </p>
+                  </blockquote>
+                  <blockquote class="h5 alert alert-orange">
+                    <p>
+                      Tian, S., Yesselman, J.D., Cordero, P., and Das, R. (<b>2015</b>)
+                      <br/>
+                      <a href="http://nar.oxfordjournals.org/content/43/W1/W522" target="_blank" rel="noopener noreferrer external"><u>Primerize: automated primer assembly for transcribing interesting RNAs.</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>
+                      <br/>
+                      <i>Nucleic Acid Research</i> <b>43(W1)</b>: W522-W526.
+                    </p>
+                  </blockquote>
+                  <b>Publications of <u>mutate-map-rescue</u> pipeline:</b>
+                  <br/>
+                  <blockquote class="h5" style="padding-right: 10px">
+                    <p>
+                      Tian, S., and Das, R. (<b>2016</b>)
+                      <br/>
+                      <a href="http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=10242118&fulltextType=RV&fileId=S0033583516000020" target="_blank" rel="noopener noreferrer external"><u>RNA structure through multidimensional chemical mapping.</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>
+                      <br/>
+                      <i>Quarterly Review of Biophysics</i> <b>49(e7)</b>: 1-30.
+                    </p>
+                    <p>
+                      Tian, S., Cordero, P., Kladwang, W., and Das, R. (<b>2014</b>)
+                      <br/>
+                      <a href="http://rnajournal.cshlp.org/content/20/11/1815" target="_blank" rel="noopener noreferrer external"><u>High-throughput mutate-map-rescue evaluates SHAPE-directed RNA structure and uncovers excited states.</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>
+                      <br/>
+                      <i>RNA</i> <b>20(11)</b>: 1815-1826.
+                    </p>
+                    <p>
+                      Kladwang, W., VanLang, C.C., Cordero P., and Das, R. (<b>2011</b>)
+                      <br/>
+                      <a href="http://www.nature.com/nchem/journal/v3/n12/full/nchem.1176.html" target="_blank" rel="noopener noreferrer external"><u>A two-dimensional mutate-and-map strategy for non-coding RNA structure.</u>&nbsp;&nbsp;<span class="glyphicon glyphicon-new-window"></span></a>
+                      <br/>
+                      <i>Nature Chemistry</i> <b>3</b>: 954-962.
+                    </p>
+                  </blockquote>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="panel panel-warning" id="contact">
+                <div class="panel-heading">
+                  <h2 class="panel-title"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Contact</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+                    <h4 style="line-height: 140%;">
+                      <span class="label label-primary pull-right">Principal Investigator</span>
+                    </h4>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    <h4 style="line-height: 140%;">
+                      <span class="label label-inverse pull-left">
+                        <a href="https://daslab.stanford.edu/" target="_blank" rel="noopener noreferrer external" style="color:#fff;">Rhiju Das</a>
+                      </span>
+                      <a href="mailto:rhiju@stanford.edu" target="_blank" rel="noopener noreferrer external"><span class="glyphicon glyphicon-envelope pull-right"></span></a>
+                    </h4>
+                  </div>
+                  <div class="col-lg-7 col-md-7 col-sm-6 col-xs-4">
+                    <p>Please feel free to contact the <a href="https://daslab.stanford.edu/contact/" target="_blank" rel="noopener noreferrer external">Das Lab</a> for questions, suggestions, or commercial use authorization.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+    <div class="starter-template" style="padding: 0px 15px;">
+      <div class="container theme-showcase" id="footer">
+        <div class="bs-docs-footer">
+          <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
+            <a href="/">
+              <img src="/assets/images/logo_primerize.png" width="120px"/>
+            </a>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+            <div class="muted credit center-block text-center" style="padding-bottom:10px;">
+              Designed, built and managed by members of the
+              <a href="https://daslab.stanford.edu/" target="_blank" rel="noopener noreferrer external">Das Lab</a>
+              @ <a href="http://www.stanford.edu/" target="_blank" rel="noopener noreferrer external">Stanford University</a>
+            </div>
+            <p class="center-block text-center">
+              Copyright &copy;&nbsp;2008-<span id="cp_year"></span>: The Board of Trustees of the Leland Stanford Junior University. All Rights Reserved.
+            </p>
+          </div>
+          <div class="col-lg-2 col-md-2 hidden-sm hidden-xs">
+            <p class="text-right">
+              <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer external">GitHub Pages</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" id="top" style="z-index:2000;">
+      <div style="position:fixed; display:block; right:-5%; bottom:100px; opacity:0.85; z-index:2000; width:60px; height:60px;"><i class="nav_top"></i></div>
+    </a>
+  </body>
+</html>
