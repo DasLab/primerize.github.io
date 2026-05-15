@@ -45,6 +45,30 @@
             }
           });
         });
+
+        // DNA concentration calculator
+        $("#calc_DNA").on("click", function() {
+          var a260 = parseFloat($("#A260_DNA").val());
+          var len  = parseFloat($("#l_DNA").val());
+          if (!isNaN(a260) && !isNaN(len) && len > 0) {
+            $("#conc_DNA").val((a260 * 50000 / 660 / len).toPrecision(4));
+          }
+        });
+        $("#clc_DNA").on("click", function() {
+          $("#A260_DNA").val(""); $("#l_DNA").val(""); $("#conc_DNA").val("");
+        });
+
+        // RNA concentration calculator
+        $("#calc_RNA").on("click", function() {
+          var a260 = parseFloat($("#A260_RNA").val());
+          var len  = parseFloat($("#l_RNA").val());
+          if (!isNaN(a260) && !isNaN(len) && len > 0) {
+            $("#conc_RNA").val((a260 * 40000 / 330 / len).toPrecision(4));
+          }
+        });
+        $("#clc_RNA").on("click", function() {
+          $("#A260_RNA").val(""); $("#l_RNA").val(""); $("#conc_RNA").val("");
+        });
       });
     </script>
     <style>
@@ -1527,42 +1551,30 @@ Etc...</textarea>
                       </tbody>
                     </table>
                     <div class="row panel-body" style="padding-bottom:0px;">
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         <p class="lead"><span class="label label-default">DNA Concentration</span></p>
                         <p class="well well-sm text-center">
-                          <span class="text-center center-block">
-                            <b>DNA (&mu;M)</b> = <b>A<sub>260</sub></b> x 50,000 / 660 / <b>length (bp)</b>
-                          </span>
+                          <b>DNA (&mu;M)</b> = <b>A<sub>260</sub></b> &times; 50,000 / 660 / <b>length (bp)</b>
                         </p>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 li-orange">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                          <label for="A260_DNA"><b>A<sub>260</sub></b> :</label>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                          <input type="text" id="A260_DNA" value="" class="form-control" />
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                          <label for="conc_DNA"><b>DNA (&mu;M)</b> :</label>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                          <input type="text" id="conc_DNA" value="" class="form-control" />
-                        </div>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 li-orange">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                          <label for="l_DNA"><b>length (bp)</b> :</label>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                          <input type="text" id="l_DNA" value="" class="form-control form-inline" />
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                          <span class="pull-right">
-                            <a id="clc_DNA" class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Clear</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a id="calc_DNA" class="btn btn-info"><span class="glyphicon glyphicon-play-circle"></span>&nbsp;&nbsp;Calculate</a>
-                          </span>
-                        </div>
+                      <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 li-orange" style="padding-top:8px;">
+                        <table>
+                          <tr>
+                            <td style="white-space:nowrap; padding-right:8px; vertical-align:middle;"><label for="A260_DNA"><b>A<sub>260</sub></b> :</label></td>
+                            <td style="padding-right:16px; vertical-align:middle;"><input type="text" id="A260_DNA" value="1" class="form-control" style="width:90px;"/></td>
+                            <td style="white-space:nowrap; padding-right:8px; vertical-align:middle;"><label for="conc_DNA"><b>DNA (&mu;M)</b> :</label></td>
+                            <td style="vertical-align:middle;"><input type="text" id="conc_DNA" value="" class="form-control" style="width:110px;" readonly/></td>
+                          </tr>
+                          <tr>
+                            <td style="white-space:nowrap; padding-right:8px; vertical-align:middle; padding-top:6px;"><label for="l_DNA"><b>length (bp)</b> :</label></td>
+                            <td style="padding-right:16px; vertical-align:middle; padding-top:6px;"><input type="text" id="l_DNA" value="20" class="form-control" style="width:90px;"/></td>
+                            <td colspan="2" style="vertical-align:middle; padding-top:6px;">
+                              <a id="clc_DNA" class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Clear</a>
+                              &nbsp;
+                              <a id="calc_DNA" class="btn btn-info"><span class="glyphicon glyphicon-play-circle"></span>&nbsp;&nbsp;Calculate</a>
+                            </td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
 
@@ -1749,40 +1761,30 @@ Etc...</textarea>
                    </div>
                     <br/>
                     <div class="row panel-body" style="padding-bottom:0px;">
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         <p class="lead"><span class="label label-default">RNA Concentration</span></p>
                         <p class="well well-sm text-center">
-                          <b>RNA (&mu;M)</b> = <b>A<sub>260</sub></b> x 40,000 / 330 / <b>length (nt)</b>
+                          <b>RNA (&mu;M)</b> = <b>A<sub>260</sub></b> &times; 40,000 / 330 / <b>length (nt)</b>
                         </p>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 li-orange">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                          <label for="A260_RNA"><b>A<sub>260</sub></b> :</label>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                          <input type="text" id="A260_RNA" value="" class="form-control" />
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                          <label for="conc_RNA"><b>RNA (&mu;M)</b> :</label>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                          <input type="text" id="conc_RNA" value="" class="form-control" />
-                        </div>
-                      </div>
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 li-orange">
-                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                          <label for="l_RNA"><b>length (nt)</b> :</label>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                          <input type="text" id="l_RNA" value="" class="form-control form-inline" />
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                          <span class="pull-right">
-                            <a id="clc_RNA" class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Clear</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a id="calc_RNA" class="btn btn-info"><span class="glyphicon glyphicon-play-circle"></span>&nbsp;&nbsp;Calculate</a>
-                          </span>
-                        </div>
+                      <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 li-orange" style="padding-top:8px;">
+                        <table>
+                          <tr>
+                            <td style="white-space:nowrap; padding-right:8px; vertical-align:middle;"><label for="A260_RNA"><b>A<sub>260</sub></b> :</label></td>
+                            <td style="padding-right:16px; vertical-align:middle;"><input type="text" id="A260_RNA" value="1" class="form-control" style="width:90px;"/></td>
+                            <td style="white-space:nowrap; padding-right:8px; vertical-align:middle;"><label for="conc_RNA"><b>RNA (&mu;M)</b> :</label></td>
+                            <td style="vertical-align:middle;"><input type="text" id="conc_RNA" value="" class="form-control" style="width:110px;" readonly/></td>
+                          </tr>
+                          <tr>
+                            <td style="white-space:nowrap; padding-right:8px; vertical-align:middle; padding-top:6px;"><label for="l_RNA"><b>length (nt)</b> :</label></td>
+                            <td style="padding-right:16px; vertical-align:middle; padding-top:6px;"><input type="text" id="l_RNA" value="20" class="form-control" style="width:90px;"/></td>
+                            <td colspan="2" style="vertical-align:middle; padding-top:6px;">
+                              <a id="clc_RNA" class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Clear</a>
+                              &nbsp;
+                              <a id="calc_RNA" class="btn btn-info"><span class="glyphicon glyphicon-play-circle"></span>&nbsp;&nbsp;Calculate</a>
+                            </td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
 
